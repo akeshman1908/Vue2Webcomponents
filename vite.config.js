@@ -1,22 +1,24 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue({ customElement: true })],
   build: {
     lib: {
-      entry: './src/main.js',  // Zorg dat dit wijst naar het hoofdbestand van je component
-      name: 'MyWebComponent',  // Naam van je component
-      fileName: (format) => `my-web-component.${format}.js`,
-      formats: ['umd']  // Gebruik 'umd' om een universele module te genereren
+      entry: 'src/entry.js',
+      name: 'MyComponent',
+      fileName: (format) => `my-component.${format}.js`,
+      formats: ['es', 'umd'],
     },
     rollupOptions: {
+      // Externalize dependencies you don't want bundled
       external: ['vue'],
       output: {
         globals: {
-          vue: 'Vue'
-        }
-      }
-    }
-  }
+          vue: 'Vue',
+        },
+      },
+    },
+  },
 });
